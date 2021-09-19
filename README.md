@@ -10,7 +10,7 @@ Step 2
 
 Test the result like this:
 
-$ . "$HOME/.local/BashAliases/bash_aliases"
+. "$HOME/.local/BashAliases/bash_aliases"
 
 Step 3
 
