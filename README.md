@@ -18,9 +18,7 @@ To apply bash_aliases each time you login, add this source statement:
 
     . "$HOME/.local/BashAliases/bash_aliases"
 
-to the following file:
-
-    ~/.bashrc
+to ~/.bashrc
 	
     echo '. "$HOME/.local/BashAliases/bash_aliases"' >> ~/.bashrc
 
