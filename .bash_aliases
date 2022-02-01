@@ -14,4 +14,5 @@ alias fupgrade='sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
 
 echo " Alias disponibili: upd      | upg       | upgdist"
 echo "                    aggiorna | ripulisci | fupgrade"
-echo "                    lsa      | riavvia   | spegni"
+echo "                    lsa      | lsdisk"
+echo "                    riavvia  | spegni"
