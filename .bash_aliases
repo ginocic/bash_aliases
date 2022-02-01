@@ -1,5 +1,6 @@
 # System
 alias lsa='ls -la'
+alias lsdisk='lsblk -p | grep "disk\|part"'
 alias riavvia='sudo reboot'
 alias spegni='sudo shutdown now'
 
