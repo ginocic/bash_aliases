@@ -2,7 +2,7 @@
 _IP=$(hostname -I) || true
 _HOST=$(hostname) || true
 if [ "$_IP" ]; then
-  printf "\n\nCiao. Mi chiamo %s e mi trovi a questo indirizzo %s\n\n" "$_HOST" "$_IP\n"
+  printf "\n\nCiao. Mi chiamo %s e mi trovi a questo indirizzo %s\n\n" "$_HOST" "$_IP"
 fi
 
 # System
@@ -22,6 +22,8 @@ alias ripulisci='sudo apt autoremove -y'
 
 echo " Alias disponibili"
 echo " per aggiornamento sistema : upd      | upg       | aggiorna"
-echo "                             fupgrade | dupgrade  | ripulisci\n"
+echo "                             fupgrade | dupgrade  | ripulisci"
+echo ""
 echo " per gestione sistema :      lsa      | lsdisk    | temp"
-echo "                             riavvia  | spegni\n"
+echo "                             riavvia  | spegni"
+echo ""
