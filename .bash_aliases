@@ -20,10 +20,17 @@ alias fupgrade='sudo apt update && sudo apt full-upgrade -y'
 alias dupgrade='sudo apt update && sudo apt dist-upgrade -y'
 alias ripulisci='sudo apt autoremove -y'
 
+# FSTRIM
+alias trimma='sudo fstrim -a -v'
+alias trimtimer='sudo systemctl status fstrim.timer'
+alias trimservice='sudo systemctl status fstrim.service'
+
 echo " Alias disponibili"
 echo " per aggiornamento sistema : upd      | upg       | aggiorna"
 echo "                             fupgrade | dupgrade  | ripulisci"
 echo ""
 echo " per gestione sistema :      lsa      | lsdisk    | temp"
 echo "                             riavvia  | spegni"
+echo ""
+echo " per la gestione di FSTRIM : trimma   | trimtimer | trimservice"
 echo ""
