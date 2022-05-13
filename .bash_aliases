@@ -6,7 +6,7 @@ if [ "$_IP" ]; then
 fi
 
 # System
-alias lsa='ls -la'
+alias lsa='ls -lA'
 alias lsdisk='lsblk -p | grep "disk\|part"'
 alias temp='/usr/bin/vcgencmd measure_temp'
 alias riavvia='sudo reboot'
