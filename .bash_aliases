@@ -49,7 +49,7 @@ fi
   
 alias lsa='ls -lA'
 alias lsdisk='lsblk -p | grep "disk\|part"'
-if [ !f /usr/local/bin/x735softsd.sh ]; then
+if [ -f /usr/local/bin/x735softsd.sh ]; then
   alias riavvia='sudo x735softsd.sh 1'
   alias spegni='sudo x735softsd.sh'
 else
