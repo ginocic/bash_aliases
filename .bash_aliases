@@ -6,7 +6,7 @@ if [ "$_IP" ]; then
 fi
 
 # System
-if [ -f /usr/bin/bc ];
+if [ -f /usr/bin/bc ]; then
   temp() {
     echo "CPU => $(echo "scale=1; $(cat /sys/class/thermal/thermal_zone0/temp)/1000" | bc)'C"
     echo "GPU => $(vcgencmd measure_temp | sed "s/^.....//g")"
