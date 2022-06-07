@@ -14,7 +14,7 @@ alias upg='sudo apt full-upgrade -y'
 alias ripulisci='sudo apt autoremove -y'
 alias aggiorna='sudo apt update && sudo apt full-upgrade -y && sudo apt autoremove -y'
 echo "       sistema  : upd      | upg       | ripulisci"
-echo "                  aggiorna"
+echo "                                         aggiorna"
 echo ""
 
 # Pi.Alert
@@ -49,8 +49,13 @@ fi
   
 alias lsa='ls -lA'
 alias lsdisk='lsblk -p | grep "disk\|part"'
-alias riavvia='sudo reboot'
-alias spegni='sudo shutdown now'
+if [ !f /usr/local/bin/x735softsd.sh ]; then
+  alias riavvia='sudo x735softsd.sh 1'
+  alias spegni='sudo x735softsd.sh'
+else
+  alias riavvia='sudo reboot'
+  alias spegni='sudo shutdown now'
+fi
 echo " Sistema"
 echo "                  lsa      | lsdisk    | temp"
 echo "                              riavvia  | spegni"
