@@ -2,7 +2,7 @@
 ## Step 1
 ```bash
 cd
-wget https://raw.githubusercontent.com/ginocic/bash_aliases/main/.bash_aliases
+wget -N https://raw.githubusercontent.com/ginocic/bash_aliases/main/.bash_aliases
 ```
 
 ## Step 2
