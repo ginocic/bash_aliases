@@ -6,9 +6,19 @@ if [ "$_IP" ]; then
 fi
 
 # System
+if [ -f /usr/bin/bc ];
+  temp() {
+    echo "CPU => $(echo "scale=1; $(cat /sys/class/thermal/thermal_zone0/temp)/1000" | bc)'C"
+    echo "GPU => $(vcgencmd measure_temp | sed "s/^.....//g")"
+  }
+else
+  echo ""
+  echo "Per favore installare il pacchetto \"bc\" che è essenziale per il corretto funzionamento della funzione \"temp\""
+  echo ""
+fi
+  
 alias lsa='ls -lA'
 alias lsdisk='lsblk -p | grep "disk\|part"'
-alias temp='/usr/bin/vcgencmd measure_temp'
 alias riavvia='sudo reboot'
 alias spegni='sudo shutdown now'
 
