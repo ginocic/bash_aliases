@@ -5,6 +5,36 @@ if [ "$_IP" ]; then
   printf "\n\nCiao. Mi chiamo %s e mi trovi a questo indirizzo %s\n\n" "$_HOST" "$_IP"
 fi
 
+echo " Alias disponibili"
+echo " Aggiornamento"
+
+# Package Manager
+alias upd='sudo apt update'
+alias upg='sudo apt full-upgrade -y'
+alias ripulisci='sudo apt autoremove -y'
+alias aggiorna='sudo apt update && sudo apt full-upgrade -y && sudo apt autoremove -y'
+echo "       sistema  : upd      | upg       | ripulisci"
+echo "                  aggiorna"
+echo ""
+
+# Pi.Alert
+if [ -d ~/pialert ]; then
+  alias paup='curl -sSL https://github.com/pucherot/Pi.Alert/raw/main/install/pialert_update.sh | bash'
+  alias paupvend='python3 ~/pialert/back/pialert.py update_vendors'
+  alias pascan='python3 ~/pialert/back/pialert.py 1'
+  echo "       Pi.Alert : paup     | paupvend  | pascan"
+  echo ""
+fi
+
+# Pi-Hole
+if [ -f /usr/local/bin/pihole ]; then
+  alias phup='pihole -up'
+  alias phg='pihole -g'
+  alias phuprohi='wget https://www.internic.net/domain/named.root -qO- | sudo tee /var/lib/unbound/root.hints'
+  echo "       Pi-Hole  : phup     | phg       | phuprohi"
+  echo ""
+fi
+
 # System
 if [ -f /usr/bin/bc ]; then
   temp() {
@@ -21,24 +51,18 @@ alias lsa='ls -lA'
 alias lsdisk='lsblk -p | grep "disk\|part"'
 alias riavvia='sudo reboot'
 alias spegni='sudo shutdown now'
-
-# Package Manager
-alias upd='sudo apt update'
-alias upg='sudo apt full-upgrade -y'
-alias ripulisci='sudo apt autoremove -y'
-alias aggiorna='sudo apt update && sudo apt full-upgrade -y && sudo apt autoremove -y'
+echo " Sistema"
+echo "                  lsa      | lsdisk    | temp"
+echo "                              riavvia  | spegni"
+echo ""
 
 # FSTRIM
-alias trimma='sudo fstrim -a -v'
-alias trimtimer='sudo systemctl status fstrim.timer'
-alias trimservice='sudo systemctl status fstrim.service'
+if [ -f /etc/udev/rules.d/50-usb-ssd-trim.rules ]; then
+  alias trimma='sudo fstrim -a -v'
+  alias trimtimer='sudo systemctl status fstrim.timer'
+  alias trimservice='sudo systemctl status fstrim.service'
+  echo " FSTRIM"
+  echo "                  trimma   | trimtimer | trimservice"
+  echo ""
+fi
 
-echo " Alias disponibili"
-echo " per aggiornamento sistema : upd      | upg       | ripulisci"
-echo "                             aggiorna"
-echo ""
-echo " per gestione sistema :      lsa      | lsdisk    | temp"
-echo "                             riavvia  | spegni"
-echo ""
-echo " per la gestione di FSTRIM : trimma   | trimtimer | trimservice"
-echo ""
