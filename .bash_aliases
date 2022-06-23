@@ -57,8 +57,8 @@ else
   alias spegni='sudo shutdown now'
 fi
 echo " Sistema"
-echo "                  lsa      | lsdisk    | temp"
-echo "                              riavvia  | spegni"
+echo "                  lsa      | lsdisk  | temp"
+echo "                             riavvia | spegni"
 echo ""
 
 # FSTRIM
