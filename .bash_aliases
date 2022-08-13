@@ -52,7 +52,7 @@ alias lsdisk='lsblk -p | grep "disk\|part"'
 if [ -f /usr/local/bin/x735softsd.sh ]; then
   alias riavvia='sudo x735softsd.sh 1'
   alias spegni='sudo x735softsd.sh'
-elif [ -f /usr/local/bin/softshutdown.sh ]
+elif [ -f /usr/local/bin/softshutdown.sh ]; then
   alias riavvia='sudo softshutdown.sh'
   alias spegni='sudo softshutdown.sh 1'
 else
