@@ -13,7 +13,7 @@ alias upd='sudo apt update'
 alias upg='sudo apt full-upgrade -y'
 alias ripulisci='sudo apt autoremove -y'
 alias aggiorna='sudo apt update && sudo apt full-upgrade -y && sudo apt autoremove -y'
-echo "       sistema  : upd      | upg       | ripulisci"
+echo "       Sistema  : upd      | upg       | ripulisci"
 echo "                                         aggiorna"
 echo ""
 
@@ -32,6 +32,13 @@ if [ -f /usr/local/bin/pihole ]; then
   alias phg='pihole -g'
   alias phuprohi='wget https://www.internic.net/domain/named.root -qO- | sudo tee /var/lib/unbound/root.hints'
   echo "       Pi-Hole  : phup     | phg       | phuprohi"
+  echo ""
+fi
+
+# Mosquitto
+if [ -f /usr/bin/mosquitto_sub ]; then
+  alias mqttsub_all='mosquitto_sub -u ginocic -P Z4nz4r4_R0554 -v -t "#"'
+  echo "           MQTT : mqttsub_all"
   echo ""
 fi
 
