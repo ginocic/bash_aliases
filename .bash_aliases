@@ -73,6 +73,7 @@ if [ -f /etc/udev/rules.d/50-usb-ssd-trim.rules ]; then
   echo "                  trimma   | trimtimer | trimservice"
   echo ""
 fi
+
 # Mosquitto
 if [ -f /usr/bin/mosquitto_sub ]; then
   alias mqttsub_all='mosquitto_sub -u ginocic -P Z4nz4r4_R0554 -v -t "#"'
@@ -80,4 +81,3 @@ if [ -f /usr/bin/mosquitto_sub ]; then
   echo "                  mqttsub_all"
   echo ""
 fi
-
