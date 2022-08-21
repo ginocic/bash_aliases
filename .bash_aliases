@@ -77,7 +77,7 @@ fi
 # Mosquitto
 if [ -f /usr/bin/mosquitto_sub ]; then
   alias mqttsub_all='mosquitto_sub -u ginocic -P Z4nz4r4_R0554 -v -t "#"'
-  echo "MQTT"
+  echo " MQTT"
   echo "                  mqttsub_all"
   echo ""
 fi
