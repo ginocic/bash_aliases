@@ -35,13 +35,6 @@ if [ -f /usr/local/bin/pihole ]; then
   echo ""
 fi
 
-# Mosquitto
-if [ -f /usr/bin/mosquitto_sub ]; then
-  alias mqttsub_all='mosquitto_sub -u ginocic -P Z4nz4r4_R0554 -v -t "#"'
-  echo "           MQTT : mqttsub_all"
-  echo ""
-fi
-
 # System
 if [ -f /usr/bin/bc ]; then
   temp() {
@@ -78,6 +71,13 @@ if [ -f /etc/udev/rules.d/50-usb-ssd-trim.rules ]; then
   alias trimservice='sudo systemctl status fstrim.service'
   echo " FSTRIM"
   echo "                  trimma   | trimtimer | trimservice"
+  echo ""
+fi
+# Mosquitto
+if [ -f /usr/bin/mosquitto_sub ]; then
+  alias mqttsub_all='mosquitto_sub -u ginocic -P Z4nz4r4_R0554 -v -t "#"'
+  echo "MQTT"
+  echo "                  mqttsub_all"
   echo ""
 fi
 
