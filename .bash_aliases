@@ -76,8 +76,8 @@ fi
 
 # Mosquitto
 if [ -f /usr/bin/mosquitto_sub ]; then
-  alias mqttsub_all='mosquitto_sub -u ginocic -P Z4nz4r4_R0554 -v -t "#"'
+  alias mqttsub_all='mosquitto_sub -u "$(echo `grep "^mqtt_username" secret.alias | awk -F : '\''{print $2}'\''`)" -P "$(echo `grep "^mqtt_password" secret.alias | awk -F : '\''{print $2}'\''`)" -v -t "#"'
   echo " MQTT"
-  echo "                  mqttsub_all"
+  echo "               mqttsub_all"
   echo ""
 fi
