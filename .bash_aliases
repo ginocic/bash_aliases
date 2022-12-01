@@ -6,7 +6,6 @@ if [ "$_IP" ]; then
 fi
 
 echo " Alias disponibili"
-echo " Aggiornamento"
 
 # Pi-Hole
 if [ -f /usr/local/bin/pihole ]; then
@@ -78,6 +77,7 @@ alias upd='sudo apt update'
 alias upg='sudo apt full-upgrade -y'
 alias ripulisci='sudo apt autoremove -y'
 alias aggiorna='sudo apt update && sudo apt full-upgrade -y && sudo apt autoremove -y'
+echo " Aggiornamento"
 echo "       Sistema  : upd      | upg       | ripulisci"
 echo "                                         aggiorna"
 echo ""
