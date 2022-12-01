@@ -12,15 +12,14 @@ if [ -f /usr/local/bin/pihole ]; then
   alias phup='pihole -up'
   alias phg='pihole -g'
   alias phuprohi='wget https://www.internic.net/domain/named.root -qO- | sudo tee /var/lib/unbound/root.hints'
-  echo "       Pi-Hole  : phup     | phg       | phuprohi"
+  echo "       Pi-Hole  : phup       | phg       | phuprohi"
   echo ""
 fi
 
 # Mosquitto
 if [ -f /usr/bin/mosquitto_sub ]; then
   alias mqttsub_all='mosquitto_sub -u "$(echo `grep "^mqtt_username" .bash_secret | awk -F : '\''{print $2}'\''`)" -P "$(echo `grep "^mqtt_password" .bash_secret | awk -F : '\''{print $2}'\''`)" -v -t "#"'
-  echo " MQTT"
-  echo "               mqttsub_all"
+  echo "         MQTT  : mqttsub_all |"
   echo ""
 fi
 
@@ -29,7 +28,7 @@ if [ -d ~/pialert ]; then
   alias paup='curl -sSL https://github.com/pucherot/Pi.Alert/raw/main/install/pialert_update.sh | bash'
   alias paupvend='python3 ~/pialert/back/pialert.py update_vendors'
   alias pascan='python3 ~/pialert/back/pialert.py 1'
-  echo "       Pi.Alert : paup     | paupvend  | pascan"
+  echo "       Pi.Alert : paup       | paupvend  | pascan"
   echo ""
 fi
 
