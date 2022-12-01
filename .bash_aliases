@@ -8,14 +8,22 @@ fi
 echo " Alias disponibili"
 echo " Aggiornamento"
 
-# Package Manager
-alias upd='sudo apt update'
-alias upg='sudo apt full-upgrade -y'
-alias ripulisci='sudo apt autoremove -y'
-alias aggiorna='sudo apt update && sudo apt full-upgrade -y && sudo apt autoremove -y'
-echo "       Sistema  : upd      | upg       | ripulisci"
-echo "                                         aggiorna"
-echo ""
+# Pi-Hole
+if [ -f /usr/local/bin/pihole ]; then
+  alias phup='pihole -up'
+  alias phg='pihole -g'
+  alias phuprohi='wget https://www.internic.net/domain/named.root -qO- | sudo tee /var/lib/unbound/root.hints'
+  echo "       Pi-Hole  : phup     | phg       | phuprohi"
+  echo ""
+fi
+
+# Mosquitto
+if [ -f /usr/bin/mosquitto_sub ]; then
+  alias mqttsub_all='mosquitto_sub -u "$(echo `grep "^mqtt_username" .bash_secret | awk -F : '\''{print $2}'\''`)" -P "$(echo `grep "^mqtt_password" .bash_secret | awk -F : '\''{print $2}'\''`)" -v -t "#"'
+  echo " MQTT"
+  echo "               mqttsub_all"
+  echo ""
+fi
 
 # Pi.Alert
 if [ -d ~/pialert ]; then
@@ -23,15 +31,6 @@ if [ -d ~/pialert ]; then
   alias paupvend='python3 ~/pialert/back/pialert.py update_vendors'
   alias pascan='python3 ~/pialert/back/pialert.py 1'
   echo "       Pi.Alert : paup     | paupvend  | pascan"
-  echo ""
-fi
-
-# Pi-Hole
-if [ -f /usr/local/bin/pihole ]; then
-  alias phup='pihole -up'
-  alias phg='pihole -g'
-  alias phuprohi='wget https://www.internic.net/domain/named.root -qO- | sudo tee /var/lib/unbound/root.hints'
-  echo "       Pi-Hole  : phup     | phg       | phuprohi"
   echo ""
 fi
 
@@ -74,10 +73,11 @@ if [ -f /etc/udev/rules.d/50-usb-ssd-trim.rules ]; then
   echo ""
 fi
 
-# Mosquitto
-if [ -f /usr/bin/mosquitto_sub ]; then
-  alias mqttsub_all='mosquitto_sub -u "$(echo `grep "^mqtt_username" secret.alias | awk -F : '\''{print $2}'\''`)" -P "$(echo `grep "^mqtt_password" secret.alias | awk -F : '\''{print $2}'\''`)" -v -t "#"'
-  echo " MQTT"
-  echo "               mqttsub_all"
-  echo ""
-fi
+# Package Manager
+alias upd='sudo apt update'
+alias upg='sudo apt full-upgrade -y'
+alias ripulisci='sudo apt autoremove -y'
+alias aggiorna='sudo apt update && sudo apt full-upgrade -y && sudo apt autoremove -y'
+echo "       Sistema  : upd      | upg       | ripulisci"
+echo "                                         aggiorna"
+echo ""
