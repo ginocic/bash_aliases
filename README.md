@@ -3,6 +3,7 @@
 ```bash
 cd
 wget -N https://raw.githubusercontent.com/ginocic/bash_aliases/main/.bash_aliases
+wget https://raw.githubusercontent.com/ginocic/bash_aliases/main/.bash_secret
 ```
 
 ## Step 2
