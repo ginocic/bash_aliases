@@ -3,6 +3,8 @@
 ```bash
 cd
 wget -N https://raw.githubusercontent.com/ginocic/bash_aliases/main/.bash_aliases
+wget -N https://raw.githubusercontent.com/ginocic/bash_aliases/main/.apps_aliases
+wget -N https://raw.githubusercontent.com/ginocic/bash_aliases/main/.docker_aliases
 wget https://raw.githubusercontent.com/ginocic/bash_aliases/main/.bash_secret
 ```
 
