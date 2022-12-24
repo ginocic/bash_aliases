@@ -9,7 +9,7 @@ if [ -f /usr/local/bin/pihole ]; then
   alias phg='pihole -g'
   alias phuprohi='wget https://www.internic.net/domain/named.root -qO- | sudo tee /var/lib/unbound/root.hints'
   alias netdevs="nmap -sP 172.18.12.* | grep report > /tmp/last; read -p 'Connect new device then press ENTER'; nmap -sP 172.18.12.* | grep report > /tmp/now; diff /tmp/last /tmp/now"
-  echo "       Pi-Hole  : phup     | phg        | phuprohi"
+  echo "        Pi-Hole : phup        | phg        | phuprohi"
   echo "                  netdevs"
 fi
 
@@ -19,15 +19,14 @@ if [ -d ~/pialert ]; then
   alias paup='curl -sSL https://github.com/pucherot/Pi.Alert/raw/main/install/pialert_update.sh | bash'
   alias paupvend='python ~/pialert/back/pialert.py update_vendors'
   alias pascan='python ~/pialert/back/pialert.py 1'
-  echo "       Pi.Alert : paup     | paupvend   | pascan"
+  echo "       Pi.Alert : paup        | paupvend   | pascan"
 fi
 
 # Mosquitto
 if [ -f /usr/bin/mosquitto_sub ]; then
   echo ""
-  alias mqttsub_all='mosquitto_sub -u "$(echo `grep "^mqtt_username" .bash_secret | awk -F : '\''{print $2}'\''`)" -P "$(echo `grep "^mqtt_password" .bash_s>
-  echo " MQTT"
-  echo "               mqttsub_all"
+  alias mqttsub_all='mosquitto_sub -u "$(echo `grep "^mqtt_username" .bash_secret | awk -F : '\''{print $2}'\''`)" -P "$(echo `grep "^mqtt_password" .bash_secret | awk -F : '\''{print $2}'\''`)" -v -t "#"'
+  echo "           MQTT : mqttsub_all |"
 fi
 
 echo ""
