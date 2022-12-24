@@ -1,0 +1,131 @@
+printf "\nUseful Docker aliases:\n\n"
+
+# define the path to the alias cache
+DOCKER_COMPOSE_YAML_DIR="/home/ginocic"
+DOCKER_COMPOSE_YAML="$DOCKER_COMPOSE_YAML_DIR/docker-compose.yaml"
+
+isNamedContainer() {
+  if [ -e "$DOCKER_COMPOSE_YAML" ] ; then
+    echo $(grep -c -E "^ +container_name: $1" $DOCKER_COMPOSE_YAML)
+  else
+    echo 0
+  fi
+}
+
+if [ $(isNamedContainer home-assistant) -gt 0 ] ; then
+  alias hacontlogs='docker container logs home-assistant -f'
+  alias hacontsh='docker exec -it home-assistant sh'
+  alias halogs='docker logs home-assistant'
+  alias haupdate='dc-pull home-assistant &&  dc-build home-assistant && docker image prune -f'
+
+  echo " Home Assistant: hacontlogs | hacontsh   | halogs"
+  echo "                 haupdate"
+  echo ""
+fi
+
+if [ $(isNamedContainer esphome) -gt 0 ] ; then
+  alias espwizard='docker run --rm -v /home/ginocic/esphome/config:/config --net=host -it esphome/esphome wizard'
+  alias espinstall='docker run --rm -v /home/ginocic/esphome/config:/config --net=host -it esphome/esphome --device=/dev/ttyusb0 run'
+
+  echo " ESPHome       : espwizard  | espinstall               {<nome-progetto>.yaml}"
+  echo "" 
+fi
+
+unset -f isNamedContainer
+
+# define the path to the alias cache
+ALIAS_CACHE_DIR="$DOCKER_COMPOSE_YAML_DIR/.cache/DockerAliases"
+ALIAS_CACHE="$ALIAS_CACHE_DIR/cache"
+
+# ensure the directory exists
+mkdir -p "$ALIAS_CACHE_DIR"
+
+# does the cache exist?
+if [ ! -f "$ALIAS_CACHE" ] ; then
+
+  echo 'dps() {' >>"$ALIAS_CACHE"
+  echo '  local DPS_CMD="docker ps --format \"table {{.Names}}\t{{.RunningFor}}\t{{.Status}}\""' >>"$ALIAS_CACHE"
+  echo '  while (( "$#" )); do' >>"$ALIAS_CACHE"
+  echo '    DPS_CMD="$DPS_CMD --filter name=$1"' >>"$ALIAS_CACHE"
+  echo '    shift' >>"$ALIAS_CACHE"
+  echo '  done' >>"$ALIAS_CACHE"
+  echo '  bash -c "$DPS_CMD"' >>"$ALIAS_CACHE"
+  echo '}' >>"$ALIAS_CACHE"
+  echo "" >>"$ALIAS_CACHE"
+  
+  echo 'dnet() {' >>"$ALIAS_CACHE"
+  echo '  local DNET_CMD="docker ps --format \"table {{.Names}}\t{{.Ports}}\""' >>"$ALIAS_CACHE"
+  echo '  while (( "$#" )); do' >>"$ALIAS_CACHE"
+  echo '    DNET_CMD="$DNET_CMD --filter name=$1"' >>"$ALIAS_CACHE"
+  echo '    shift' >>"$ALIAS_CACHE"
+  echo '  done' >>"$ALIAS_CACHE"
+  echo '  bash -c "$DNET_CMD"' >>"$ALIAS_CACHE"
+  echo '}' >>"$ALIAS_CACHE"
+  echo "" >>"$ALIAS_CACHE"
+  
+  echo "alias dc-up='docker compose -f ${DOCKER_COMPOSE_YAML} up -d'" >>"$ALIAS_CACHE"
+  echo "alias dc-restart='docker compose -f ${DOCKER_COMPOSE_YAML} restart'" >>"$ALIAS_CACHE"
+  echo "alias dc-stop='docker compose -f ${DOCKER_COMPOSE_YAML} stop'" >>"$ALIAS_CACHE"
+  echo "alias dc-pull='docker compose -f ${DOCKER_COMPOSE_YAML} pull'" >>"$ALIAS_CACHE"
+  echo "alias dc-build='docker compose -f ${DOCKER_COMPOSE_YAML} up --build -d'" >>"$ALIAS_CACHE"
+  echo "alias dc-rebuild='docker compose -f ${DOCKER_COMPOSE_YAML} build --no-cache --pull'" >>"$ALIAS_CACHE"
+  echo "alias dc-recreate='docker compose -f ${DOCKER_COMPOSE_YAML} up -d --force-recreate'" >>"$ALIAS_CACHE"
+  echo "alias dc-terminate='docker compose -f ${DOCKER_COMPOSE_YAML} rm --force --stop -v'" >>"$ALIAS_CACHE"
+  echo "alias dc-edit='nano ${DOCKER_COMPOSE_YAML}'" >>"$ALIAS_CACHE"
+  echo "alias dc-test='docker compose -f ${DOCKER_COMPOSE_YAML} config'" >>"$ALIAS_CACHE"
+  echo "alias dc-down='docker compose -f ${DOCKER_COMPOSE_YAML} down'" >>"$ALIAS_CACHE"
+  echo "alias dc-prune='docker system prune -f'" >>"$ALIAS_CACHE"
+  echo "" >>"$ALIAS_CACHE"
+
+  echo 'echo ""' >>"$ALIAS_CACHE"
+	echo 'echo "        Docker: dc-up       | dc-restart   | dc-stop     {<container> …}"' >>"$ALIAS_CACHE"
+	echo 'echo "                dc-pull     | dc-build     | dc-rebuild  {<container> …}"' >>"$ALIAS_CACHE"
+	echo 'echo "                dc-recreate | dc-terminate               {<container> …}"' >>"$ALIAS_CACHE"
+  echo 'echo "                dps         | dnet                       {<container> …}"' >>"$ALIAS_CACHE"
+	echo 'echo "                dc-edit, dc-test, dc-down, dc-prune"' >>"$ALIAS_CACHE"
+  echo 'echo ""' >>"$ALIAS_CACHE"
+  echo "" >>"$ALIAS_CACHE"
+
+  # no! fetch the list of running containers
+  CONTAINERS=$(curl -s --unix-socket /var/run/docker.sock http://localhost/containers/json | jq -r '.[].Names | .[] | gsub("^/";"")')
+  # non-empty result?
+  if [ -n "$CONTAINERS" ] ; then
+    # yes! tell the user this may take some time
+    echo "Building $ALIAS_CACHE - this may take some time"
+
+    # initialise the cache file
+    touch "$ALIAS_CACHE"
+    echo "# Rebuilt $(date)" >>"$ALIAS_CACHE"
+
+    # iterate the list
+    for CONTAINER in $CONTAINERS ; do
+      echo -n "   checking $CONTAINER - "
+      CANDIDATES=$(docker exec $CONTAINER which bash ash zsh sh)
+      if [ $? -eq 1 ] ; then
+        FIRST=$(echo $CANDIDATES | cut -d " " -f 1)
+        echo "$FIRST"
+        echo "alias ${CONTAINER^^}_SHELL='docker exec -it $CONTAINER $FIRST'" >>"$ALIAS_CACHE"
+      else
+        echo "no shell found"
+      fi
+    done
+
+    echo "" >>"$ALIAS_CACHE"
+    echo 'echo "        Shells: <CONTAINER>_SHELL (all capital letters)"' >>"$ALIAS_CACHE"
+    echo "" >>"$ALIAS_CACHE"
+  else
+    echo "No containers running"
+  fi
+
+fi
+
+# does the cache exist now?
+if [ -f "$ALIAS_CACHE" ] ; then
+   # yes! source the cache
+   source "$ALIAS_CACHE"
+fi
+
+# clean up
+unset ALIAS_CACHE_DIR ALIAS_CACHE CONTAINERS CONTAINER CANDIDATES FIRST ALIASNAME
+rm "$ALIAS_CACHE"
+echo ""
