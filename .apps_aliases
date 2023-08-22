@@ -52,6 +52,6 @@ if [ $APPS ]; then
 fi
 
 # clean up
-unset ALIAS_CACHE_DIR ALIAS_CACHE APPS
 rm "$ALIAS_CACHE"
+unset ALIAS_CACHE_DIR ALIAS_CACHE APPS
 echo ""
