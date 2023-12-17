@@ -14,6 +14,7 @@ alias mv='mv -i'
 alias lsdisk='lsblk -p | grep "disk\|part"'
 alias riavvia='sudo reboot'
 alias spegni='sudo shutdown -h now'
+alias clear='sudo dietpi-banner 1'
 #
 # FSTrim
 alias trimma='sudo fstrim -a -v'
