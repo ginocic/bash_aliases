@@ -26,3 +26,9 @@ alias upd='sudo apt update'
 alias upg='sudo apt full-upgrade -y'
 alias ripulisci='sudo apt autoremove -y'
 alias aggiorna='sudo apt update && sudo apt full-upgrade -y && sudo apt autoremove -y'
+#
+# Docker
+alias docker='sudo docker'
+alias dnodels='docker node ls'
+alias dnetworkls='docker network ls'
+alias dmanageraddrs='docker info | grep -A1 "Manager Addresses"'
