@@ -27,7 +27,7 @@ fi
 # Pi.Alert
 if [ -d ~/pialert ]; then
   echo 'echo ""'>>"$ALIAS_CACHE"
-  echo "alias paup='curl -sSL https://github.com/pucherot/Pi.Alert/raw/main/install/pialert_update.sh | bash'">>"$ALIAS_CACHE"
+  echo "alias paup='wget -qLO - https://github.com/leiweibau/Pi.Alert/raw/main/install/pialert_update.sh | bash'">>"$ALIAS_CACHE"
   echo "alias paupvend='python ~/pialert/back/pialert.py update_vendors'">>"$ALIAS_CACHE"
   echo "alias pascan='python ~/pialert/back/pialert.py 1'">>"$ALIAS_CACHE"
   echo 'echo "       Pi.Alert : paup        | paupvend   | pascan"'>>"$ALIAS_CACHE"
